@@ -13,6 +13,8 @@ class MenuState extends FlxState
 		this._btnPlay = new FlxButton(0, 0, "Play", this.clickPlay);
 		_btnPlay.screenCenter();
 		add(_btnPlay);
+		
+		FlxG.sound.playMusic(AssetPaths.MenuMusic__ogg, 1, true);
 		super.create();
 	}
 
