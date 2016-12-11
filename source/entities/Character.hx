@@ -4,10 +4,6 @@ import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.util.FlxPath;
 
-/**
- * ...
- * @author PIerre
- */
 class Character extends FlxSprite 
 {
 

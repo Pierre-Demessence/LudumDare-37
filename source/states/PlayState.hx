@@ -1,46 +1,40 @@
 package states;
 
-import flash.display.InterpolationMethod;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.math.FlxRandom;
-import flixel.text.FlxText;
-import flixel.tile.FlxBaseTilemap.FlxTilemapDiagonalPolicy;
-import flixel.ui.FlxButton;
-import flixel.math.FlxMath;
-
-import flixel.tile.FlxTilemap;
-import flixel.addons.editors.ogmo.FlxOgmoLoader;
-import flixel.FlxObject;
-import flixel.addons.editors.tiled.TiledObjectLayer;
-import flixel.group.FlxGroup;
-import flixel.math.FlxPoint;
-import flixel.math.FlxVelocity;
-import flixel.util.FlxPath;
-
-import entities.Player;
+import entities.Door;
 import entities.Enemy;
 import entities.Exit;
-import entities.Door;
-
+import entities.Player;
+import flixel.FlxG;
+import flixel.FlxObject;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.addons.editors.ogmo.FlxOgmoLoader;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxPoint;
+import flixel.tile.FlxBaseTilemap.FlxTilemapDiagonalPolicy;
+import flixel.tile.FlxTilemap;
 import states.GameOverState;
-import states.WinLvlState;
+import states.WinState;
 
 class PlayState extends FlxState
 {
-	private var _player:entities.Player;
-	private var _exit:entities.Exit;
-	private var _map:FlxOgmoLoader;
-	private var _mWalls:FlxTilemap;
-	private var _grpEnemies:FlxTypedGroup<entities.Enemy>;
-	private var _grpDoors:FlxTypedGroup<entities.Door>;
+	private var _level: Level;
+	private var _player: Player;
+	private var _exit: Exit;
+	private var _map: FlxOgmoLoader;
+	private var _mWalls: FlxTilemap;
+	private var _grpEnemies: FlxTypedGroup<Enemy>;
+	private var _grpDoors: FlxTypedGroup<Door>;
 
+	override function new(level: Level) {
+		super();
+		this._level = level;
+	}
+	
 	override public function create():Void
 	{
-
-		//_map = new FlxOgmoLoader(AssetPaths.testlvl__oel);
-		_map = new FlxOgmoLoader(AssetPaths.easylevel__oel);
+		var levelName: String = this._level._name;
+		_map = new FlxOgmoLoader('assets/data/$levelName.oel');
 
 		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
 		_mWalls.follow();
@@ -49,16 +43,16 @@ class PlayState extends FlxState
 		
 		add(_mWalls);
 
-		_grpEnemies = new FlxTypedGroup<entities.Enemy>();
+		_grpEnemies = new FlxTypedGroup<Enemy>();
 		add(_grpEnemies);
 		
-		_grpDoors = new FlxTypedGroup<entities.Door>();
+		_grpDoors = new FlxTypedGroup<Door>();
 		add(_grpDoors);
 
-		_exit = new entities.Exit();
+		_exit = new Exit();
 		add(_exit);
 
-		_player = new entities.Player();
+		_player = new Player();
 		
 		_map.loadEntities(placeEntities, "entities");
 		
@@ -103,13 +97,17 @@ class PlayState extends FlxState
 		});
 		*/
 		
-		FlxG.collide(_player, _grpEnemies, gameOver);
-		FlxG.collide(_player, _exit, winLvl);
+		FlxG.collide(_player, _grpEnemies, function(a, b) {
+			FlxG.switchState(new GameOverState(this._level));
+		});
+		FlxG.collide(_player, _exit, function(a, b) {
+			FlxG.switchState(new WinState(this._level));
+		});
 		
 		if (FlxG.mouse.justReleased && this.turnEnded()) {
 			getRoom(FlxG.mouse.getWorldPosition());
 			
-			_grpDoors.forEach(function (d: Door) {
+			_grpDoors.forEach(function(d: Door) {
 				_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
 			});
 			
@@ -119,16 +117,6 @@ class PlayState extends FlxState
 			_player.move(this.findPath(_player, _exit));
 		}
 		
-	}
-	
-	private function gameOver(P:Player, E:Enemy): Void
-	{
-		FlxG.switchState(new GameOverState());
-	}
-	
-		private function winLvl(P:Player, E:Enemy): Void
-	{
-		FlxG.switchState(new WinLvlState());
 	}
 	
 	private function getRoom(mousePos: FlxPoint):Void
