@@ -16,7 +16,7 @@
     <Width>1280</Width>
     <Height>960</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\plop\Documents\git\LudumDare-37\assets\data\ld37.oep</Filename>
+  <Filename>C:\Users\Pierre Demessence\Documents\HaxeFlixel\Ludum Dare 37\assets\data\ld37.oep</Filename>
   <AngleMode>Degrees</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
@@ -52,7 +52,7 @@
       </ScrollFactor>
     </LayerDefinition>
     <LayerDefinition xsi:type="GridLayerDefinition">
-      <Name>NewLayer0</Name>
+      <Name>rooms</Name>
       <Grid>
         <Width>32</Width>
         <Height>32</Height>

@@ -41,5 +41,11 @@
     <door id="8" x="640" y="544" open="False" />
     <door id="9" x="640" y="352" open="True" />
   </entities>
-  <NewLayer0 exportMode="Rectangles" />
+  <rooms exportMode="Rectangles">
+    <rect x="32" y="32" w="608" h="416" />
+    <rect x="32" y="480" w="608" h="448" />
+    <rect x="672" y="32" w="576" h="256" />
+    <rect x="672" y="320" w="576" h="320" />
+    <rect x="672" y="672" w="576" h="256" />
+  </rooms>
 </level>

@@ -50,12 +50,9 @@ class PlayState extends FlxState
 		add(_grpDoors = new FlxTypedGroup<Door>());
 		add(_grpRooms = new FlxTypedGroup<Room>());
 		_map.loadEntities(placeEntities, "entities");
-		/*
 		_map.loadRectangles(function(rect: FlxRect) {
 			_grpRooms.add(new Room(rect));
 		}, "rooms");
-		*/
-		_grpRooms.add(new Room(new FlxRect(20, 20, 50, 50)));
 		
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
