@@ -6,6 +6,8 @@ import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
+import states.CreditsState;
+import states.LevelSelectState;
 import states.PlayState;
 
 class MenuState extends FlxState
@@ -15,16 +17,33 @@ class MenuState extends FlxState
 	{
 		add(new FlxStarField2D(0, 0, 800, 600, 300));
 		
-		var _txtTitle: FlxText = new FlxText(0, 50, 0, "One Room Game", 40);
-		_txtTitle.alignment = CENTER;
-		_txtTitle.screenCenter(FlxAxes.X);
-		add(_txtTitle);
+		var txtTitle: FlxText = new FlxText(0, 50, 0, "One Room Game", 40);
+		txtTitle.alignment = CENTER;
+		txtTitle.screenCenter(FlxAxes.X);
+		add(txtTitle);
 		
-		add(new FlxButton(0, 0, "Play", function() {
+		var playButton: FlxButton = new FlxButton(0, 0, "Play", function() {
 			FlxG.switchState(new PlayState(Level.LEVELS[0]));
-		}).screenCenter());
+		});
+		playButton.screenCenter();
+		playButton.y -= 30;
+		add(playButton);
 		
-		FlxG.sound.playMusic(AssetPaths.MenuMusic__ogg, 1, true);
+		var selectButton: FlxButton = new FlxButton(0, 0, "Select Level", function() {
+			FlxG.switchState(new LevelSelectState());
+		});
+		selectButton.screenCenter();
+		add(selectButton);
+		
+		var creditsButton: FlxButton = new FlxButton(0, 0, "Credits", function() {
+			FlxG.switchState(new CreditsState());
+		});
+		creditsButton.screenCenter();
+		creditsButton.y += 30;
+		add(creditsButton);
+		
+		if (FlxG.sound.music == null)
+			FlxG.sound.playMusic(AssetPaths.MenuMusic__ogg, 1, true);
 		
 		super.create();
 	}
