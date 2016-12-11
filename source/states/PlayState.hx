@@ -1,4 +1,4 @@
-package;
+package states;
 
 import flash.display.InterpolationMethod;
 import flixel.FlxG;
@@ -17,15 +17,15 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
 import flixel.util.FlxPath;
 
-import Player;
-import Enemy;
+import entities.Player;
+import entities.Enemy;
 
 class PlayState extends FlxState
 {
-	private var _player:Player;
+	private var _player:entities.Player;
 	private var _map:FlxOgmoLoader;
 	private var _mWalls:FlxTilemap;
-	private var _grpEnemies:FlxTypedGroup<Enemy>;
+	private var _grpEnemies:FlxTypedGroup<entities.Enemy>;
 
 	override public function create():Void
 	{
@@ -39,9 +39,9 @@ class PlayState extends FlxState
 		_mWalls.setTileProperties(2, FlxObject.ANY);
 		add(_mWalls);
 
-		_player = new Player();
+		_player = new entities.Player();
 
-		_grpEnemies = new FlxTypedGroup<Enemy>();
+		_grpEnemies = new FlxTypedGroup<entities.Enemy>();
 		add(_grpEnemies);
 
 		_map.loadEntities(placeEntities, "entities");
@@ -61,7 +61,7 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "enemy")
 		{
-			_grpEnemies.add(new Enemy(x + 4, y, Std.parseInt(entityData.get("etype"))));
+			_grpEnemies.add(new entities.Enemy(x + 4, y, Std.parseInt(entityData.get("etype"))));
 		}
 	}
 
@@ -75,7 +75,7 @@ class PlayState extends FlxState
 
 	}
 
-	private function collideEnemie(e:Enemy):Void
+	private function collideEnemie(e:entities.Enemy):Void
 	{
 		FlxG.collide(e, _mWalls);
 	}
@@ -88,24 +88,23 @@ class PlayState extends FlxState
 		if (_leftclick)
 		{
 			var test = FlxG.mouse.getWorldPosition();
-
+			this.getRoom(test);
 			_grpEnemies.forEach(moveEnemie);
 		}
 	}
 
-	/*
-	private function getRoom():Room
+	
+	private function getRoom(mousePos: FlxPoint):Void
 	{
-
+		FlxG.log.add("My var: " + mousePos);
 	}
-	*/
 
 	private function movePlayer():Void
 	{
 
 	}
 
-	private function moveEnemie(e:Enemy):Void
+	private function moveEnemie(e:entities.Enemy):Void
 	{
 		var pathPoints:Array<FlxPoint> = _mWalls.findPath(
 			FlxPoint.get(e.x, e.y),
