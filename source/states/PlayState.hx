@@ -4,6 +4,7 @@ import flash.display.InterpolationMethod;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.math.FlxRandom;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
@@ -39,6 +40,7 @@ class PlayState extends FlxState
 		_mWalls.follow();
 		_mWalls.setTileProperties(1, FlxObject.NONE);
 		_mWalls.setTileProperties(2, FlxObject.ANY);
+		
 		add(_mWalls);
 
 		_player = new entities.Player();
@@ -70,24 +72,22 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "door")
 		{
-			_grpDoors.add(new Door(x, y, false));
+			_grpDoors.add(new Door(x, y, new FlxRandom().bool()));
 		}
 	}
 
 	override public function update(elapsed:Float):Void
 	{
-		movement();
 		super.update(elapsed);
 		FlxG.collide(_player, _mWalls);
 		FlxG.collide(_grpEnemies, _mWalls);
-		_grpEnemies.forEach(collideEnemie);
-
+		_grpDoors.forEach(function (d: Door) {
+			if (!d._opened) FlxG.collide(d, _grpEnemies);
+		});
+		
+		movement();
 	}
 
-	private function collideEnemie(e:entities.Enemy):Void
-	{
-		FlxG.collide(e, _mWalls);
-	}
 
 	private function movement():Void
 	{
