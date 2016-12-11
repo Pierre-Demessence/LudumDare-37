@@ -92,7 +92,7 @@ class PlayState extends FlxState
 			_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
 		});
 		
-		if (FlxG.mouse.justReleased) {
+		if (FlxG.mouse.justReleased && this.turnEnded()) {
 			getRoom(FlxG.mouse.getWorldPosition());
 			_grpEnemies.forEach(moveEnemie);
 		}
@@ -101,7 +101,7 @@ class PlayState extends FlxState
 	
 	private function getRoom(mousePos: FlxPoint):Void
 	{
-		_grpDoors.forEach(function (d: Door) {
+		_grpDoors.forEach(function(d: Door) {
 			if (d.getHitbox().containsPoint(mousePos))
 				d.toggle();
 		});
@@ -115,7 +115,15 @@ class PlayState extends FlxState
 
 		// Tell unit to follow path
 		if (pathPoints != null)
-			e.path = new FlxPath().start(pathPoints, 50, FlxPath.FORWARD);
+			e.path = new FlxPath().start(pathPoints, 150, FlxPath.FORWARD);
+	}
+	
+	private function turnEnded(): Bool {
+		var res: Bool = true;
+		_grpEnemies.forEach(function(e : Enemy) {
+			res = res && (e.path == null || e.path.finished);
+		});
+		return res;
 	}
 
 }
