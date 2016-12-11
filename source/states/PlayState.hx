@@ -34,6 +34,7 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		var levelName: String = this._level._name;
+		
 		_map = new FlxOgmoLoader('assets/data/$levelName.oel');
 
 		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
@@ -42,21 +43,10 @@ class PlayState extends FlxState
 		_mWalls.setTileProperties(2, FlxObject.ANY);
 		
 		add(_mWalls);
-
-		_grpEnemies = new FlxTypedGroup<Enemy>();
-		add(_grpEnemies);
-		
-		_grpDoors = new FlxTypedGroup<Door>();
-		add(_grpDoors);
-
-		_exit = new Exit();
-		add(_exit);
-
-		_player = new Player();
-		
+		add(_grpEnemies = new FlxTypedGroup<Enemy>());
+		add(_grpDoors = new FlxTypedGroup<Door>());
 		_map.loadEntities(placeEntities, "entities");
 		
-		add(_player);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
 		super.create();
@@ -68,6 +58,7 @@ class PlayState extends FlxState
 		var y:Int = Std.parseInt(entityData.get("y"));
 		if (entityName == "player")
 		{
+			add(_player = new Player());
 			_player.x = x;
 			_player.y = y;
 		}
@@ -81,6 +72,7 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "exit")
 		{
+			add(_exit = new Exit());
 			_exit.x = x;
 			_exit.y = y;
 		}
