@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.math.FlxRandom;
 import flixel.text.FlxText;
+import flixel.tile.FlxBaseTilemap.FlxTilemapDiagonalPolicy;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 
@@ -102,7 +103,7 @@ class PlayState extends FlxState
 			_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
 		});
 		
-		if (FlxG.mouse.justReleased/* && this.turnEnded()*/) {
+		if (FlxG.mouse.justReleased && this.turnEnded()) {
 			getRoom(FlxG.mouse.getWorldPosition());
 			_grpEnemies.forEach(function(e: Enemy) {
 				e.move(this.findPath(e, _player));
@@ -121,14 +122,15 @@ class PlayState extends FlxState
 	}
 	
 	private function findPath(from: FlxSprite, to: FlxSprite): Array<FlxPoint> {
-		var path: Array<FlxPoint> = _mWalls.findPath(from.getPosition(), to.getPosition());
+		var path: Array<FlxPoint> = _mWalls.findPath(from.getPosition(), to.getPosition(), false, false, FlxTilemapDiagonalPolicy.NONE);
+		if (path != null) path = path.slice(1);
 		return path;
 	}
 	
 	private function turnEnded(): Bool {
 		var res: Bool = true;
 		_grpEnemies.forEach(function(e : Enemy) {
-			res = res && (e.path == null || e.path.finished);
+			res = res && e.hasMoved();
 		});
 		return res;
 	}
