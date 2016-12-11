@@ -43,17 +43,19 @@ class PlayState extends FlxState
 		
 		add(_mWalls);
 
-		_player = new entities.Player();
-
 		_grpEnemies = new FlxTypedGroup<entities.Enemy>();
 		add(_grpEnemies);
 		
 		_grpDoors = new FlxTypedGroup<entities.Door>();
 		add(_grpDoors);
 
+		_player = new entities.Player();
+		
 		_map.loadEntities(placeEntities, "entities");
+		
 		add(_player);
 		FlxG.camera.follow(_player, TOPDOWN, 1);
+		
 		super.create();
 	}
 
@@ -72,7 +74,9 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "door")
 		{
-			_grpDoors.add(new Door(x, y, new FlxRandom().bool()));
+			var d: Door = new Door(x, y, new FlxRandom().bool());
+			_grpDoors.add(d);
+			_mWalls.setTile(Math.floor(x / 16), Math.floor(y / 16), d._opened ? 1 : 2, true);
 		}
 	}
 

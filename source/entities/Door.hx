@@ -10,7 +10,6 @@ class Door extends FlxSprite
 	{
 		super(X, Y);
 		this._opened = opened;
-		makeGraphic(16, 16, FlxColor.BLUE);
 	}
 
 	override public function update(elapsed:Float):Void
