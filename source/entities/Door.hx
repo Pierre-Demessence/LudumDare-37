@@ -15,7 +15,7 @@ class Door extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		makeGraphic(16, 16, this._opened ? FlxColor.CYAN : FlxColor.BLUE);
+		makeGraphic(32, 32, this._opened ? FlxColor.CYAN : FlxColor.BLUE);
 	}
 	
 	public function toggle() {

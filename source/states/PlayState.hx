@@ -40,7 +40,7 @@ class PlayState extends FlxState
 		
 		_map = new FlxOgmoLoader('assets/data/$levelName.oel');
 
-		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 16, 16, "walls");
+		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 32, 32, "walls");
 		_mWalls.follow();
 		_mWalls.setTileProperties(1, FlxObject.NONE);
 		_mWalls.setTileProperties(2, FlxObject.ANY);
@@ -110,7 +110,7 @@ class PlayState extends FlxState
 			getRoom(FlxG.mouse.getWorldPosition());
 			
 			_grpDoors.forEach(function(d: Door) {
-				_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
+				_mWalls.setTile(Math.floor(d.x / 32), Math.floor(d.y / 32), d._opened ? 1 : 2, true);
 			});
 			
 			_grpEnemies.forEach(function(e: Enemy) {
