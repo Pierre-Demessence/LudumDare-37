@@ -4,6 +4,7 @@ import entities.Door;
 import entities.Enemy;
 import entities.Exit;
 import entities.Player;
+import entities.Room;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -11,6 +12,7 @@ import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
 import flixel.tile.FlxBaseTilemap.FlxTilemapDiagonalPolicy;
 import flixel.tile.FlxTilemap;
 import states.GameOverState;
@@ -25,6 +27,7 @@ class PlayState extends FlxState
 	private var _mWalls: FlxTilemap;
 	private var _grpEnemies: FlxTypedGroup<Enemy>;
 	private var _grpDoors: FlxTypedGroup<Door>;
+	private var _grpRooms: FlxTypedGroup<Room>;
 
 	override function new(level: Level) {
 		super();
@@ -45,7 +48,14 @@ class PlayState extends FlxState
 		add(_mWalls);
 		add(_grpEnemies = new FlxTypedGroup<Enemy>());
 		add(_grpDoors = new FlxTypedGroup<Door>());
+		add(_grpRooms = new FlxTypedGroup<Room>());
 		_map.loadEntities(placeEntities, "entities");
+		/*
+		_map.loadRectangles(function(rect: FlxRect) {
+			_grpRooms.add(new Room(rect));
+		}, "rooms");
+		*/
+		_grpRooms.add(new Room(new FlxRect(20, 20, 50, 50)));
 		
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
