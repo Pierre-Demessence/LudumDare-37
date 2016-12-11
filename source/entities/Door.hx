@@ -17,5 +17,9 @@ class Door extends FlxSprite
 		super.update(elapsed);
 		makeGraphic(16, 16, this._opened ? FlxColor.CYAN : FlxColor.BLUE);
 	}
+	
+	public function toggle() {
+		this._opened = !this._opened;
+	}
 
 }

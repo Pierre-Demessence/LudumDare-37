@@ -76,48 +76,39 @@ class PlayState extends FlxState
 		{
 			var d: Door = new Door(x, y, new FlxRandom().bool());
 			_grpDoors.add(d);
-			_mWalls.setTile(Math.floor(x / 16), Math.floor(y / 16), d._opened ? 1 : 2, true);
 		}
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		/*
 		FlxG.collide(_player, _mWalls);
 		FlxG.collide(_grpEnemies, _mWalls);
 		_grpDoors.forEach(function (d: Door) {
 			if (!d._opened) FlxG.collide(d, _grpEnemies);
 		});
+		*/
+		_grpDoors.forEach(function (d: Door) {
+			_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
+		});
 		
-		movement();
-	}
-
-
-	private function movement():Void
-	{
-		var _leftclick:Bool = false;
-		_leftclick = FlxG.mouse.justReleased;
-
-		if (_leftclick)
-		{
-			var test = FlxG.mouse.getWorldPosition();
-			this.getRoom(test);
+		if (FlxG.mouse.justReleased) {
+			getRoom(FlxG.mouse.getWorldPosition());
 			_grpEnemies.forEach(moveEnemie);
 		}
+		
 	}
-
 	
 	private function getRoom(mousePos: FlxPoint):Void
 	{
-		FlxG.log.add("My var: " + mousePos);
+		_grpDoors.forEach(function (d: Door) {
+			if (d.getHitbox().containsPoint(mousePos))
+				d.toggle();
+		});
 	}
 
-	private function movePlayer():Void
-	{
-
-	}
-
-	private function moveEnemie(e:entities.Enemy):Void
+	private function moveEnemie(e: Enemy):Void
 	{
 		var pathPoints:Array<FlxPoint> = _mWalls.findPath(
 			FlxPoint.get(e.x, e.y),
