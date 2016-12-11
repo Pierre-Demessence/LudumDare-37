@@ -16,7 +16,7 @@ class Enemy extends Character
 	{
 		super(X, Y);
 		etype = EType;
-		makeGraphic(16, 16, FlxColor.RED);
+		makeGraphic(32, 32, FlxColor.RED);
 
 		//loadGraphic(AssetPaths.player__png, true, 16, 16);
 

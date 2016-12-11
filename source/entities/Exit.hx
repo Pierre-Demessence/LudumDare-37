@@ -12,7 +12,7 @@ class Exit extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		makeGraphic(16, 16, FlxColor.GREEN);
+		makeGraphic(32, 32, FlxColor.GREEN);
 	}
 
 }
