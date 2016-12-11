@@ -74,9 +74,9 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "door")
 		{
-			var d: Door = new Door(x, y, new FlxRandom().bool());
-			_grpDoors.add(d);
-			_mWalls.setTile(Math.floor(x / 16), Math.floor(y / 16), d._opened ? 1 : 2, true);
+			_grpDoors.add(new Door(x, y, entityData.get("open") == "True"));
+
+			//_mWalls.setTile(Math.floor(x / 16), Math.floor(y / 16), d._opened ? 1 : 2, true);
 		}
 	}
 
