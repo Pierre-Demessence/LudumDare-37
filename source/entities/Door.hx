@@ -2,7 +2,7 @@ package entities;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
 
-class Enemy extends FlxSprite
+class Door extends FlxSprite
 {
 	public var _opened: Bool = false;
 

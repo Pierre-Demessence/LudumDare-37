@@ -19,6 +19,7 @@ import flixel.util.FlxPath;
 
 import entities.Player;
 import entities.Enemy;
+import entities.Door;
 
 class PlayState extends FlxState
 {
@@ -26,6 +27,7 @@ class PlayState extends FlxState
 	private var _map:FlxOgmoLoader;
 	private var _mWalls:FlxTilemap;
 	private var _grpEnemies:FlxTypedGroup<entities.Enemy>;
+	private var _grpDoors:FlxTypedGroup<entities.Door>;
 
 	override public function create():Void
 	{
@@ -43,6 +45,9 @@ class PlayState extends FlxState
 
 		_grpEnemies = new FlxTypedGroup<entities.Enemy>();
 		add(_grpEnemies);
+		
+		_grpDoors = new FlxTypedGroup<entities.Door>();
+		add(_grpDoors);
 
 		_map.loadEntities(placeEntities, "entities");
 		add(_player);
@@ -61,7 +66,11 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "enemy")
 		{
-			_grpEnemies.add(new entities.Enemy(x + 4, y, Std.parseInt(entityData.get("etype"))));
+			_grpEnemies.add(new Enemy(x, y, Std.parseInt(entityData.get("etype"))));
+		}
+		else if (entityName == "door")
+		{
+			_grpDoors.add(new Door(x, y, false));
 		}
 	}
 
