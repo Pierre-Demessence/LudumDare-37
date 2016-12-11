@@ -20,11 +20,13 @@ import flixel.util.FlxPath;
 
 import entities.Player;
 import entities.Enemy;
+import entities.Exit;
 import entities.Door;
 
 class PlayState extends FlxState
 {
 	private var _player:entities.Player;
+	private var _exit:entities.Exit;
 	private var _map:FlxOgmoLoader;
 	private var _mWalls:FlxTilemap;
 	private var _grpEnemies:FlxTypedGroup<entities.Enemy>;
@@ -48,6 +50,9 @@ class PlayState extends FlxState
 		
 		_grpDoors = new FlxTypedGroup<entities.Door>();
 		add(_grpDoors);
+
+		_exit = new entities.Exit();
+		add(_exit);
 
 		_player = new entities.Player();
 		
@@ -75,6 +80,11 @@ class PlayState extends FlxState
 		else if (entityName == "door")
 		{
 			_grpDoors.add(new Door(x, y, entityData.get("open") == "True"));
+		}
+		else if (entityName == "exit")
+		{
+			_exit.x = x;
+			_exit.y = y;
 		}
 	}
 
