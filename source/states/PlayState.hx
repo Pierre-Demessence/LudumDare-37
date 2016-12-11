@@ -24,6 +24,9 @@ import entities.Enemy;
 import entities.Exit;
 import entities.Door;
 
+import states.GameOverState;
+import states.WinLvlState;
+
 class PlayState extends FlxState
 {
 	private var _player:entities.Player;
@@ -100,6 +103,9 @@ class PlayState extends FlxState
 		});
 		*/
 		
+		FlxG.collide(_player, _grpEnemies, gameOver);
+		FlxG.collide(_player, _exit, winLvl);
+		
 		if (FlxG.mouse.justReleased && this.turnEnded()) {
 			getRoom(FlxG.mouse.getWorldPosition());
 			
@@ -113,6 +119,16 @@ class PlayState extends FlxState
 			_player.move(this.findPath(_player, _exit));
 		}
 		
+	}
+	
+	private function gameOver(P:Player, E:Enemy): Void
+	{
+		FlxG.switchState(new GameOverState());
+	}
+	
+		private function winLvl(P:Player, E:Enemy): Void
+	{
+		FlxG.switchState(new WinLvlState());
 	}
 	
 	private function getRoom(mousePos: FlxPoint):Void
