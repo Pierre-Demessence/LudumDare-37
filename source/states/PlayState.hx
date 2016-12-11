@@ -99,12 +99,14 @@ class PlayState extends FlxState
 			if (!d._opened) FlxG.collide(d, _grpEnemies);
 		});
 		*/
-		_grpDoors.forEach(function (d: Door) {
-			_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
-		});
 		
 		if (FlxG.mouse.justReleased && this.turnEnded()) {
 			getRoom(FlxG.mouse.getWorldPosition());
+			
+			_grpDoors.forEach(function (d: Door) {
+				_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
+			});
+			
 			_grpEnemies.forEach(function(e: Enemy) {
 				e.move(this.findPath(e, _player));
 			});
