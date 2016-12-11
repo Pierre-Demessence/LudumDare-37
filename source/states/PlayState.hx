@@ -102,9 +102,12 @@ class PlayState extends FlxState
 			_mWalls.setTile(Math.floor(d.x / 16), Math.floor(d.y / 16), d._opened ? 1 : 2, true);
 		});
 		
-		if (FlxG.mouse.justReleased && this.turnEnded()) {
+		if (FlxG.mouse.justReleased/* && this.turnEnded()*/) {
 			getRoom(FlxG.mouse.getWorldPosition());
-			_grpEnemies.forEach(moveEnemie);
+			_grpEnemies.forEach(function(e: Enemy) {
+				e.move(this.findPath(e, _player));
+			});
+			_player.move(this.findPath(_player, _exit));
 		}
 		
 	}
@@ -116,16 +119,10 @@ class PlayState extends FlxState
 				d.toggle();
 		});
 	}
-
-	private function moveEnemie(e: Enemy):Void
-	{
-		var pathPoints:Array<FlxPoint> = _mWalls.findPath(
-			FlxPoint.get(e.x, e.y),
-			FlxPoint.get(this._player.x, this._player.y));
-
-		// Tell unit to follow path
-		if (pathPoints != null)
-			e.path = new FlxPath().start(pathPoints, 150, FlxPath.FORWARD);
+	
+	private function findPath(from: FlxSprite, to: FlxSprite): Array<FlxPoint> {
+		var path: Array<FlxPoint> = _mWalls.findPath(from.getPosition(), to.getPosition());
+		return path;
 	}
 	
 	private function turnEnded(): Bool {

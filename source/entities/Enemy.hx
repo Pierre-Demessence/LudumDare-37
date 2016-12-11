@@ -7,11 +7,7 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
 import flixel.util.FlxPath;
 
-/**
- * ...
- * @author ...
- */
-class Enemy extends FlxSprite
+class Enemy extends Character
 {
 	public var speed:Float = 200;
 	public var etype(default, null):Int;
@@ -41,7 +37,6 @@ class Enemy extends FlxSprite
 		setSize(15, 30);
 		offset.set(5, 0);
 		*/
-
 	}
 
 	override public function update(elapsed:Float):Void

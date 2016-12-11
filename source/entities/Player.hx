@@ -10,7 +10,7 @@ import flixel.FlxObject;
  * ...
  * @author ...
  */
-class Player extends FlxSprite
+class Player extends Character
 {
 	public var speed:Float = 200;
 
