@@ -36,23 +36,23 @@ class PlayState extends FlxState
 	
 	override public function create():Void
 	{
-		var levelName: String = this._level._name;
+		var levelName: String = this._level != null ? this._level._name : "level_01";
 		
 		_map = new FlxOgmoLoader('assets/data/$levelName.oel');
 
-		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, 32, 32, "walls");
+		_mWalls = _map.loadTilemap(AssetPaths.tiles__png, Main.TILE_SIZE, Main.TILE_SIZE, "walls");
 		_mWalls.follow();
 		_mWalls.setTileProperties(1, FlxObject.NONE);
 		_mWalls.setTileProperties(2, FlxObject.ANY);
 		
 		add(_mWalls);
-		add(_grpEnemies = new FlxTypedGroup<Enemy>());
-		add(_grpDoors = new FlxTypedGroup<Door>());
 		add(_grpRooms = new FlxTypedGroup<Room>());
-		_map.loadEntities(placeEntities, "entities");
+		add(_grpDoors = new FlxTypedGroup<Door>());
+		add(_grpEnemies = new FlxTypedGroup<Enemy>());
 		_map.loadRectangles(function(rect: FlxRect) {
 			_grpRooms.add(new Room(rect));
 		}, "rooms");
+		_map.loadEntities(placeEntities, "entities");
 		
 		FlxG.camera.follow(_player, TOPDOWN, 1);
 		
@@ -75,7 +75,15 @@ class PlayState extends FlxState
 		}
 		else if (entityName == "door")
 		{
-			_grpDoors.add(new Door(x, y, entityData.get("open") == "True"));
+			var door: Door = new Door(x, y, entityData.get("open") == "True");
+			_grpDoors.add(door);
+			this._grpRooms.forEach(function(room: Room) {
+				var roomRect: FlxRect = room.getRect();
+				var doorRect: FlxRect = new FlxRect(x - 1, y - 1, Main.TILE_SIZE*1.5, Main.TILE_SIZE*1.5);
+				trace('does $roomRect overlaps $doorRect ?');
+				if (roomRect.overlaps(doorRect))
+					room._doors.push(door);
+			});
 		}
 		else if (entityName == "exit")
 		{
@@ -87,7 +95,6 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
-		super.update(elapsed);
 		/*
 		FlxG.collide(_player, _mWalls);
 		FlxG.collide(_grpEnemies, _mWalls);
@@ -103,27 +110,24 @@ class PlayState extends FlxState
 			FlxG.switchState(new WinState(this._level));
 		});
 		
-		if (FlxG.mouse.justReleased && this.turnEnded()) {
-			getRoom(FlxG.mouse.getWorldPosition());
+		if (this.roomJustClicked() && this.turnEnded()) {
 			
 			_grpDoors.forEach(function(d: Door) {
-				_mWalls.setTile(Math.floor(d.x / 32), Math.floor(d.y / 32), d._opened ? 1 : 2, true);
+				_mWalls.setTile(Math.floor(d.x / Main.TILE_SIZE), Math.floor(d.y / Main.TILE_SIZE), d._opened ? 1 : 2, true);
 			});
 			
 			_grpEnemies.forEach(function(e: Enemy) {
-				e.move(this.findPath(e, _player));
+				e.move(this.findPath(e, _player)); // Destination à changer
 			});
-			_player.move(this.findPath(_player, _exit));
+			_player.move(this.findPath(_player, _exit));  // Destination à changer
 		}
-		
+		super.update(elapsed);
 	}
 	
-	private function getRoom(mousePos: FlxPoint):Void
-	{
-		_grpDoors.forEach(function(d: Door) {
-			if (d.getHitbox().containsPoint(mousePos))
-				d.toggle();
-		});
+	private function roomJustClicked(): Bool {
+		for (r in this._grpRooms)
+			if (r._justClicked) return true;
+		return false;
 	}
 	
 	private function findPath(from: FlxSprite, to: FlxSprite): Array<FlxPoint> {

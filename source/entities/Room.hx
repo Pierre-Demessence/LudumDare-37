@@ -1,30 +1,50 @@
 package entities;
 
 import flixel.FlxSprite;
+import flixel.input.mouse.FlxMouseEventManager;
 import flixel.math.FlxRect;
 import flixel.util.FlxColor;
 
 class Room extends FlxSprite
 {
+	public var _doors: Array<Door> = [];
+	public var _justClicked: Bool = false;
+	
 	public function new(rect: FlxRect)
 	{
 		super(rect.x, rect.y);
 		this.setSize(rect.width, rect.height);
-		makeGraphic(Math.floor(rect.width), Math.floor(rect.height), FlxColor.fromRGB(255, 255, 0, 100));
+		makeGraphic(Math.floor(rect.width), Math.floor(rect.height), FlxColor.YELLOW);
+		this.alpha = 0;
+		FlxMouseEventManager.add(this, onMouseDown, onMouseUp, onMouseOver, onMouseOut, false, true, false);
 	}
 	
-	override public function update(elapsed:Float):Void
+	public function getRect(): FlxRect {
+		return new FlxRect(this.x, this.y, this.width, this.height);
+	}
+	
+	private function onMouseDown(sprite:FlxSprite) {
+		this._justClicked = true;
+		for(d in this._doors)
+			d.toggle();
+	}
+	
+	private function onMouseUp(sprite:FlxSprite) {
+		this._justClicked = false;
+	}
+	
+	private function onMouseOver(sprite:FlxSprite) {
+		this.alpha = 0.25;
+	}
+	
+	private function onMouseOut(sprite:FlxSprite) {
+		this.alpha = 0;
+	}
+	
+	override public function destroy():Void 
 	{
-		super.update(elapsed);
+		FlxMouseEventManager.remove(this);
+		super.destroy();
 	}
-	
-	public function hover() {
-		trace("Room Hover");
-	}
-	
-	public function click() {
-		trace("Room Clicked");
-	}
-		
 	
 }

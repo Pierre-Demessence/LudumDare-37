@@ -7,6 +7,8 @@ import states.MenuState;
 
 class Main extends Sprite
 {
+	public static var TILE_SIZE: Int = 32;
+	
 	public function new()
 	{
 		super();
