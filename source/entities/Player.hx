@@ -17,7 +17,7 @@ class Player extends Character
 	public function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);
-		loadGraphic(AssetPaths.voleur__png, true, 32, 32);
+		loadGraphic(AssetPaths.voleur_tr__png, true, 32, 32);
 
 		// retourne le sprite quand le player va vers la droite
 		setFacingFlip(FlxObject.LEFT, false, false);

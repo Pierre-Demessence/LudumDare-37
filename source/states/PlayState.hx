@@ -80,7 +80,6 @@ class PlayState extends FlxState
 			this._grpRooms.forEach(function(room: Room) {
 				var roomRect: FlxRect = room.getRect();
 				var doorRect: FlxRect = new FlxRect(x - 1, y - 1, Main.TILE_SIZE*1.5, Main.TILE_SIZE*1.5);
-				trace('does $roomRect overlaps $doorRect ?');
 				if (roomRect.overlaps(doorRect))
 					room._doors.push(door);
 			});
