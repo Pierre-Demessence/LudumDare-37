@@ -15,6 +15,7 @@ class Character extends FlxSprite
 	
 	public function move(path: Array<FlxPoint>): Void {
 		this.path.cancel();
+		if (path == null) return ;
 		this.path.start(path, 150, FlxPath.FORWARD);
 		this.path.drawDebug();
 	}

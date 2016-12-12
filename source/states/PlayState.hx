@@ -99,6 +99,13 @@ class PlayState extends FlxState
 		}
 	}
 	
+	private function getRoom(pos: FlxPoint): Room {
+		for (room in this._grpRooms.members)
+			if (room.getRect().containsPoint(pos))
+				return room;
+		return null;
+	}
+	
 	private function canMove(): Bool {
 		for (c in getCharacters())
 			if (!c.isIdle())
@@ -139,7 +146,18 @@ class PlayState extends FlxState
 	}
 	
 	private function findPath(from: FlxSprite, to: FlxSprite): Array<FlxPoint> {
-		var path: Array<FlxPoint> = _mWalls.findPath(from.getPosition(), to.getPosition(), false, false, FlxTilemapDiagonalPolicy.NONE);
+		var path: Array<FlxPoint> = _mWalls.findPath(from.getPosition(), to.getPosition(), true, false, FlxTilemapDiagonalPolicy.NONE);
+		if (path == null) return null;
+		
+		var fromRoom: Room = this.getRoom(from.getPosition());
+		var room: Room = null;
+		for (pos in path)
+			if ((room = this.getRoom(pos)) != fromRoom)
+				break;
+		if (room == null) return null;
+				
+		path = _mWalls.findPath(from.getPosition(), room.getRoomCenter(), true, false, FlxTilemapDiagonalPolicy.NONE);
+				
 		if (path != null) path = path.slice(1);
 		return path;
 	}

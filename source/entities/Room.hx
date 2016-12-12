@@ -2,6 +2,7 @@ package entities;
 
 import flixel.FlxSprite;
 import flixel.input.mouse.FlxMouseEventManager;
+import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.util.FlxColor;
 
@@ -22,6 +23,10 @@ class Room extends FlxSprite
 	
 	public function getRect(): FlxRect {
 		return new FlxRect(this.x, this.y, this.width, this.height);
+	}
+	
+	public function getRoomCenter(): FlxPoint {
+		return new FlxPoint((this.x*2 + this.width)/2, (this.y*2 + this.height)/2);
 	}
 	
 	private function onMouseDown(sprite:FlxSprite) {
