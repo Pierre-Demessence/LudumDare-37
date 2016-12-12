@@ -72,7 +72,6 @@ class PlayState extends FlxState
 		if (entityName == "player")
 		{
 			add(_player = new Player());
-			_player.path.onComplete = this.onPathComplete;
 			_player.x = x;
 			_player.y = y;
 		}
@@ -80,7 +79,6 @@ class PlayState extends FlxState
 		{
 			var e: Enemy;
 			_grpEnemies.add(e = new Enemy(x, y, Std.parseInt(entityData.get("etype"))));
-			e.path.onComplete = this.onPathComplete;
 		}
 		else if (entityName == "door")
 		{
@@ -138,10 +136,6 @@ class PlayState extends FlxState
 		});
 	
 		super.update(elapsed);
-	}
-	
-	private function onPathComplete(path: FlxPath): Void {
-		
 	}
 	
 	private function findPath(from: FlxSprite, to: FlxSprite): Array<FlxPoint> {
