@@ -20,18 +20,20 @@ class WinState extends FlxState
 	
 	override public function create():Void
 	{
-		add(new FlxStarField2D(0, 0, 800, 600, 300));
+		add(new FlxStarField2D(0, 0, 1280, 960, 300));
 		
 		if (Level.getNextLevel(this._level) != null)
 			this.winLevel();
 		else
 			this.winGame();
 		
+		FlxG.camera.zoom = 2;
+
 		super.create();
 	}
 	
 	private function winLevel(): Void {
-		var _txtTitle: FlxText = new FlxText(0, 50, 0, "WOW\nYou're so PRO :o", 40);
+		var _txtTitle: FlxText = new FlxText(0, 250, 0, "WOW\nYou're so PRO :o", 40);
 		_txtTitle.alignment = CENTER;
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);

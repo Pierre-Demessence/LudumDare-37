@@ -13,9 +13,9 @@ class LevelSelectState extends FlxState
 {	
 	override public function create():Void
 	{
-		add(new FlxStarField2D(0, 0, 800, 600, 300));
+		add(new FlxStarField2D(0, 0, 1280, 960, 300));
 		
-		var txtTitle: FlxText = new FlxText(0, 50, 0, "Level Selection", 40);
+		var txtTitle: FlxText = new FlxText(0, 250, 0, "Level Selection", 40);
 		txtTitle.alignment = CENTER;
 		txtTitle.screenCenter(FlxAxes.X);
 		add(txtTitle);
@@ -49,6 +49,8 @@ class LevelSelectState extends FlxState
 		backButton.y += 150;
 		add(backButton);
 		
+		FlxG.camera.zoom = 2;
+
 		super.create();
 	}
 }

@@ -19,6 +19,7 @@ import flixel.tile.FlxTilemap;
 import flixel.util.FlxPath;
 import states.GameOverState;
 import states.WinState;
+import flixel.math.FlxMath;
 
 class PlayState extends FlxState
 {
@@ -61,9 +62,6 @@ class PlayState extends FlxState
 			}
 		}, "rooms");
 		_map.loadEntities(placeEntities, "entities");
-		
-		FlxG.camera.follow(_player, TOPDOWN, 1);
-		
 		super.create();
 	}
 
