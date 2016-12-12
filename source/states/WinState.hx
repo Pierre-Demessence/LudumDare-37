@@ -33,7 +33,7 @@ class WinState extends FlxState
 	}
 	
 	private function winLevel(): Void {
-		var _txtTitle: FlxText = new FlxText(0, 250, 0, "WOW\nYou're so PRO :o", 40);
+		var _txtTitle: FlxText = new FlxText(0, 300, 0, "WOW\nYou're so PRO :o", 40);
 		_txtTitle.alignment = CENTER;
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);

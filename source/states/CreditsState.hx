@@ -14,7 +14,7 @@ class CreditsState extends FlxState
 		add(new FlxStarField2D(0, 0, 1280, 960, 300));
 		
 		
-		var txtTitle: FlxText = new FlxText(0, 250, 0, "Credits", 40);
+		var txtTitle: FlxText = new FlxText(0, 300, 0, "Credits", 40);
 		txtTitle.alignment = CENTER;
 		txtTitle.screenCenter(FlxAxes.X);
 		add(txtTitle);

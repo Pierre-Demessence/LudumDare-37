@@ -22,7 +22,7 @@ class GameOverState extends FlxState
 	{
 		add(new FlxStarField2D(0, 0, 1280, 960, 300));
 		
-		var _txtTitle: FlxText = new FlxText(0, 250, 0, "Game\nOver", 40);
+		var _txtTitle: FlxText = new FlxText(0, 300, 0, "Game\nOver", 40);
 		_txtTitle.alignment = CENTER;
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);
