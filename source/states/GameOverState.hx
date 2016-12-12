@@ -20,9 +20,9 @@ class GameOverState extends FlxState
 	
 	override public function create():Void
 	{
-		add(new FlxStarField2D(0, 0, 800, 600, 300));
+		add(new FlxStarField2D(0, 0, 1280, 960, 300));
 		
-		var _txtTitle: FlxText = new FlxText(0, 50, 0, "Game\nOver", 40);
+		var _txtTitle: FlxText = new FlxText(0, 250, 0, "Game\nOver", 40);
 		_txtTitle.alignment = CENTER;
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);
@@ -40,7 +40,9 @@ class GameOverState extends FlxState
 		_btnGameOver.x = FlxG.width / 2 + 10;
 		_btnGameOver.y = FlxG.height / 2 - _btnGameOver.height - 10;
 		add(_btnGameOver);
-				
+			
+		FlxG.camera.zoom = 2;
+
 		super.create();
 	}
 }
