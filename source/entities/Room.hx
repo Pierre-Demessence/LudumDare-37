@@ -8,7 +8,8 @@ import flixel.util.FlxColor;
 class Room extends FlxSprite
 {
 	public var _doors: Array<Door> = [];
-	public var _justClicked: Bool = false;
+	public var _onClickCallback: Void -> Void;
+	public var _isUnlocked: (Bool -> Void) -> Void;
 	
 	public function new(rect: FlxRect)
 	{
@@ -16,7 +17,7 @@ class Room extends FlxSprite
 		this.setSize(rect.width, rect.height);
 		makeGraphic(Math.floor(rect.width), Math.floor(rect.height), FlxColor.YELLOW);
 		this.alpha = 0;
-		FlxMouseEventManager.add(this, onMouseDown, onMouseUp, onMouseOver, onMouseOut, false, true, false);
+		FlxMouseEventManager.add(this, onMouseDown, null, onMouseOver, onMouseOut, false, true, false);
 	}
 	
 	public function getRect(): FlxRect {
@@ -24,13 +25,12 @@ class Room extends FlxSprite
 	}
 	
 	private function onMouseDown(sprite:FlxSprite) {
-		this._justClicked = true;
-		for(d in this._doors)
-			d.toggle();
-	}
-	
-	private function onMouseUp(sprite:FlxSprite) {
-		this._justClicked = false;
+		this._isUnlocked(function(unlocked) {
+			if (!unlocked) return ;
+			for(d in this._doors)
+				d.toggle();
+			_onClickCallback();
+		});
 	}
 	
 	private function onMouseOver(sprite:FlxSprite) {

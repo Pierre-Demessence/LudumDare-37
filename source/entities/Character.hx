@@ -19,7 +19,7 @@ class Character extends FlxSprite
 		this.path.drawDebug();
 	}
 	
-	public function hasMoved(): Bool {
+	public function isIdle(): Bool {
 		return !this.path.active || this.path.finished;
 	}
 	
