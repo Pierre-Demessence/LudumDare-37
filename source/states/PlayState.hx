@@ -88,7 +88,7 @@ class PlayState extends FlxState
 				var roomRect: FlxRect = room.getRect();
 				var doorRect: FlxRect = new FlxRect(x - 1, y - 1, Main.TILE_SIZE*1.5, Main.TILE_SIZE*1.5);
 				if (roomRect.overlaps(doorRect))
-					room._doors.push(door);
+					room.addDoor(door);
 			});
 		}
 		else if (entityName == "exit")

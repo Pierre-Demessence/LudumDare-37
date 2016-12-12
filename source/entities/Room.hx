@@ -32,6 +32,7 @@ class Room extends FlxSprite
 	private function onMouseDown(sprite:FlxSprite) {
 		this._isUnlocked(function(unlocked) {
 			if (!unlocked) return ;
+
 			for(d in this._doors)
 				d.toggle();
 			_onClickCallback();
@@ -39,7 +40,7 @@ class Room extends FlxSprite
 	}
 	
 	private function onMouseOver(sprite:FlxSprite) {
-		this.alpha = 0.25;
+		this.alpha = 0.15;
 	}
 	
 	private function onMouseOut(sprite:FlxSprite) {
@@ -50,6 +51,30 @@ class Room extends FlxSprite
 	{
 		FlxMouseEventManager.remove(this);
 		super.destroy();
+	}
+
+	public function addDoor(door: Door): Void {
+		this._doors.push(door);
+		door._rooms.push(this);
+	}
+
+	private function getRooms(doors: Array<Door>): Array<Room> {
+		var res: Array<Room> = [];
+		for(d in doors)
+			for (r in d._rooms)
+				if (r != this && res.indexOf(r) == -1)
+					res.push(r);
+		return (res);
+	}
+
+	public function getAdjacentRooms(): Array<Room> {
+		return this.getRooms(this._doors);
+	}
+
+	public function getAdjacentOpenRooms(): Array<Room> {
+		return this.getRooms(this._doors.filter(function(door: Door) {
+			return door._opened;
+		}));
 	}
 	
 }

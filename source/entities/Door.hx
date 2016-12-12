@@ -4,6 +4,7 @@ import flixel.util.FlxColor;
 
 class Door extends FlxSprite
 {
+	public var _rooms: Array<Room> = [];
 	public var _opened: Bool = false;
 
 	public function new(?X:Float=0, ?Y:Float=0, opened:Bool)
