@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 import states.PlayState;
 
@@ -27,14 +26,14 @@ class GameOverState extends FlxState
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);
 		
-		var _btnWin: FlxButton = new FlxButton(0, 200, "Replay Level", function() {
+		var _btnWin: Button = new Button(0, 200, "Replay Level", function() {
 			FlxG.switchState(new PlayState(this._level));
 		});
 		_btnWin.x = FlxG.width / 2 - _btnWin.width - 10;
 		_btnWin.y = FlxG.height / 2 - _btnWin.height - 10;
 		add(_btnWin);
 		
-		var _btnGameOver: FlxButton = new FlxButton(0, 0, "Menu", function() {
+		var _btnGameOver: Button = new Button(0, 0, "Menu", function() {
 			FlxG.switchState(new MenuState());
 		});
 		_btnGameOver.x = FlxG.width / 2 + 10;

@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 
 class CreditsState extends FlxState
@@ -32,7 +31,7 @@ class CreditsState extends FlxState
 		txt2.y += 100;
 		add(txt2);
 		
-		var backButton: FlxButton = new FlxButton(0, 0, "Back", function() {
+		var backButton: Button = new Button(0, 0, "Back", function() {
 			FlxG.switchState(new MenuState());
 		});
 		backButton.screenCenter();

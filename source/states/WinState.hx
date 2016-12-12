@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 import states.PlayState;
 
@@ -38,7 +37,7 @@ class WinState extends FlxState
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);
 
-		var _btnWin: FlxButton = new FlxButton(0, 200, "Next level", function() {
+		var _btnWin: Button = new Button(0, 200, "Next level", function() {
 			FlxG.switchState(new PlayState(Level.getNextLevel(this._level)));
 		});
 		_btnWin.x = FlxG.width / 2 - _btnWin.width - 10;
@@ -46,7 +45,7 @@ class WinState extends FlxState
 		add(_btnWin);
 
 		
-		var _btnGameOver: FlxButton = new FlxButton(0, 0, "Menu", function() {
+		var _btnGameOver: Button = new Button(0, 0, "Menu", function() {
 			FlxG.switchState(new MenuState());
 		});
 		_btnGameOver.x = FlxG.width / 2 + 10;
@@ -60,7 +59,7 @@ class WinState extends FlxState
 		_txtTitle.screenCenter(FlxAxes.X);
 		add(_txtTitle);
 		
-		add(new FlxButton(0, 0, "Menu", function() {
+		add(new Button(0, 0, "Menu", function() {
 			FlxG.switchState(new MenuState());
 		}).screenCenter());
 	}

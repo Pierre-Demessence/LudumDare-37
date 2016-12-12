@@ -6,7 +6,6 @@ import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUIList;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 
 class LevelSelectState extends FlxState
@@ -21,7 +20,7 @@ class LevelSelectState extends FlxState
 		add(txtTitle);
 		
 		var levelList: FlxUIList = new FlxUIList();
-		levelList.set_spacing(new FlxButton().height * 2);
+		levelList.set_spacing(new Button().height * 2);
 		var subLevelList: FlxUIList = new FlxUIList();
 		for (i in (0...Level.LEVELS.length)) {
 			if (i % 4 == 0) {
@@ -32,17 +31,17 @@ class LevelSelectState extends FlxState
 			
 			var l: Level = Level.LEVELS[i];
 			var levelName: String = "Level " + l._name.split('_')[1];
-			subLevelList.add(new FlxButton(0, 0, levelName, function() {
+			subLevelList.add(new Button(0, 0, levelName, function() {
 				FlxG.switchState(new PlayState(l));
 			}));
 		}
 		levelList.set_stacking(FlxUIList.STACK_VERTICAL);
 		levelList.screenCenter();
-		levelList.x -= new FlxButton().width * 4 / 2;
+		levelList.x -= new Button().width * 4 / 2;
 		levelList.y -= 100;
 		add(levelList);
 		
-		var backButton: FlxButton = new FlxButton(0, 0, "Back", function() {
+		var backButton: Button = new Button(0, 0, "Back", function() {
 			FlxG.switchState(new MenuState());
 		});
 		backButton.screenCenter();

@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.text.FlxText;
-import flixel.ui.FlxButton;
 import flixel.util.FlxAxes;
 import states.CreditsState;
 import states.LevelSelectState;
@@ -22,20 +21,20 @@ class MenuState extends FlxState
 		txtTitle.screenCenter(FlxAxes.X);
 		add(txtTitle);
 		
-		var playButton: FlxButton = new FlxButton(0, 0, "Play", function() {
+		var playButton: Button = new Button(0, 0, "Play", function() {
 			FlxG.switchState(new PlayState(Level.LEVELS[0]));
 		});
 		playButton.screenCenter();
 		playButton.y -= 30;
 		add(playButton);
 		
-		var selectButton: FlxButton = new FlxButton(0, 0, "Select Level", function() {
+		var selectButton: Button = new Button(0, 0, "Select Level", function() {
 			FlxG.switchState(new LevelSelectState());
 		});
 		selectButton.screenCenter();
 		add(selectButton);
 		
-		var creditsButton: FlxButton = new FlxButton(0, 0, "Credits", function() {
+		var creditsButton: Button = new Button(0, 0, "Credits", function() {
 			FlxG.switchState(new CreditsState());
 		});
 		creditsButton.screenCenter();
@@ -45,7 +44,6 @@ class MenuState extends FlxState
 		if (FlxG.sound.music == null)
 			FlxG.sound.playMusic(AssetPaths.MenuMusic__ogg, 1, true);
 				
-			
 		FlxG.camera.zoom = 2;
 
 		super.create();
