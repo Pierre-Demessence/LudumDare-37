@@ -1,5 +1,6 @@
 package entities;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.input.mouse.FlxMouseEventManager;
 import flixel.math.FlxPoint;
@@ -33,6 +34,7 @@ class Room extends FlxSprite
 		this._isUnlocked(function(unlocked) {
 			if (!unlocked) return ;
 
+			FlxG.sound.play(AssetPaths.door__wav);
 			for(d in this._doors)
 				d.toggle();
 			_onClickCallback();

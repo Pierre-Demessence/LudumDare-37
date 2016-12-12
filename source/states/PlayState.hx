@@ -136,9 +136,11 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{	
 		FlxG.collide(_player, _grpEnemies, function(a, b) {
+			FlxG.sound.play(AssetPaths.lose__wav).persist = true;
 			FlxG.switchState(new GameOverState(this._level));
 		});
 		FlxG.collide(_player, _exit, function(a, b) {
+			FlxG.sound.play(AssetPaths.win__wav).persist = true;
 			FlxG.switchState(new WinState(this._level));
 		});
 	
