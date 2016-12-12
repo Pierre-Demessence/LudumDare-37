@@ -42,7 +42,7 @@ class MenuState extends FlxState
 		add(creditsButton);
 		
 		if (FlxG.sound.music == null)
-			FlxG.sound.playMusic(AssetPaths.MenuMusic__ogg, 1, true);
+			FlxG.sound.playMusic(AssetPaths.GameMusic__ogg, 1, true);
 				
 		FlxG.camera.zoom = 2;
 
