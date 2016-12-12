@@ -17,7 +17,9 @@ class Character extends FlxSprite
 		this.path.cancel();
 		if (path == null) return ;
 		this.path.start(path, 150, FlxPath.FORWARD);
-		this.path.drawDebug();
+		#if debug
+			this.path.drawDebug();
+		#end
 	}
 	
 	public function isIdle(): Bool {
