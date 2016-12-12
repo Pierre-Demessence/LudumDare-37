@@ -16,9 +16,9 @@ class Enemy extends Character
 	{
 		super(X, Y);
 		etype = EType;
-		makeGraphic(Main.TILE_SIZE, Main.TILE_SIZE, FlxColor.RED);
+		//makeGraphic(Main.TILE_SIZE, Main.TILE_SIZE, FlxColor.RED);
 
-		//loadGraphic(AssetPaths.player__png, true, 16, 16);
+		loadGraphic(AssetPaths.cop__png, true, 32, 32);
 
 		// retourne le sprite quand le player va vers la droite
 
