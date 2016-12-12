@@ -128,9 +128,9 @@ class PlayState extends FlxState
 		});
 			
 		_grpEnemies.forEach(function(e: Enemy) {
-			e.move(this.findPath(e, _player)); // Destination à changer
+			e.move(this.findPath(e, _player));
 		});
-		_player.move(this.findPath(_player, _exit));  // Destination à changer
+		_player.move(this.findPath(_player, _exit));
 	}
 
 	override public function update(elapsed:Float):Void
