@@ -4,6 +4,8 @@ import flixel.util.FlxColor;
 
 class Exit extends FlxSprite
 {
+		public var _room: Room;
+
 	public function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);

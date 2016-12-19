@@ -10,6 +10,8 @@ import flixel.util.FlxColor;
 class Room extends FlxSprite
 {
 	public var _doors: Array<Door> = [];
+	private var _exit: Exit = null;
+
 	public var _onClickCallback: Void -> Void;
 	public var _isUnlocked: (Bool -> Void) -> Void;
 	
@@ -79,4 +81,14 @@ class Room extends FlxSprite
 		}));
 	}
 	
+	public function isExitRoom(): Bool {
+		return (this._exit != null);
+	}
+	
+	public function setExit(exit: Exit): Void {
+		this._exit = exit;
+		exit._room = this;
+		trace("set exit");
+	}
+
 }
