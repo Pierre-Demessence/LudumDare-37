@@ -11,6 +11,8 @@ class Room extends FlxSprite
 {
 	public var _doors: Array<Door> = [];
 	private var _exit: Exit = null;
+	public var distanceToExit = -1;
+	public var distanceToPlayer = -1;
 
 	public var _onClickCallback: Void -> Void;
 	public var _isUnlocked: (Bool -> Void) -> Void;
